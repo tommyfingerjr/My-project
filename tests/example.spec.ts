@@ -1,24 +1,30 @@
 // @ts-check
 require('dotenv').config();
 const { test, expect } = require('@playwright/test');
+
+//import Authenticator generateToken function
+import {generateToken} from "authenticator"
+
+//generate OTP using secret key
+const otp = generateToken(process.env.otpToken)
  
 const url = process.env.URL
+const Login = process.env.Login
+const Password = process.env.Password
+const otpToken = process.env.otpToken
 
+  test('Login to Google with Two-Factor Authentication', async ({ page }) => {
+    await page.goto('https://www.google.com/');
+    await page.click('.gb_1.gb_2.gb_8d.gb_8c');
+    await page.click("//*[@id='identifierId']");
+    await page.fill("//*[@id='identifierId']",(Login));
+    await page.click("//span[text()='Հաջորդը']");
+    await page.click("//input[@type='password']");
+    await page.fill("//input[@type='password']",(Password));
+    await page.click("//span[text()='Հաջորդը']");
+    await page.click('#totpPin');
+    await page.fill('#totpPin',otp,)
+    await page.click("//span[text()='Հաջորդը']");
 
-test.beforeEach(async ({ page }) => {
-  await page.goto('https://demo.playwright.dev/todomvc');
-});
-
-const TODO_ITEMS = [
-  'buy some cheese',
-  'feed the cat',
-  'book a doctors appointment'
-];
-
-test.describe('New Todo', () => {
-  test('should allow me to add todo items', async ({ page }) => {
-      await page.goto(url);
-      await page.waitForSelector(".a")
-      await page.fill("//*", TODO_ITEMS[0])
-  });
-});
+  }); 
+  

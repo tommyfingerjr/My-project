@@ -1,4 +1,4 @@
-// @ts-check
+ @ts-check
 require('dotenv').config();
 const { test, expect } = require('@playwright/test');
 
@@ -13,11 +13,11 @@ const Login = process.env.Login
 const Password = process.env.Password
 const otpToken = process.env.otpToken
 
-  test('Login to Google with Two-Factor Authentication', async ({ page }) => {
+  test('Google Login with Two-Factor Authentication', async ({ page }) => {
     await page.goto('https://www.google.com/');
     await page.click('.gb_1.gb_2.gb_8d.gb_8c');
     await page.click("//*[@id='identifierId']");
-    await page.fill("//*[@id='identifierId']",(Login));
+    await page.fill("//*[@id='identifierId']",(Login));git 
     await page.click("//span[text()='Հաջորդը']");
     await page.click("//input[@type='password']");
     await page.fill("//input[@type='password']",(Password));
@@ -27,4 +27,3 @@ const otpToken = process.env.otpToken
     await page.click("//span[text()='Հաջորդը']");
 
   }); 
-  
